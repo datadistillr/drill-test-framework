@@ -124,15 +124,19 @@ public class TestDriver {
 
     final Stopwatch stopwatch = Stopwatch.createStarted();
     try {
+      LOG.info("> Connecting to Drill");
       connection = connectionPool.getOrCreateConnection();
+      LOG.info("> Done Connecting");
     } catch (SQLException e) {
       e.printStackTrace();
       System.exit(-1);
     }
     
     //Record JDBC driver name, version and other metadata info
+    LOG.info("> Get Metadata");
     DatabaseMetaData dm = connection.getMetaData();
-    LOG.info(DrillTestDefaults.LINE_BREAK +"\nJDBC DRIVER METADATA CATALOG\n"+DrillTestDefaults.LINE_BREAK+"\n"+ new DBMetaData(dm).toString() + DrillTestDefaults.LINE_BREAK);
+    // TODO - this was slow for some reason?
+    //LOG.info(DrillTestDefaults.LINE_BREAK +"\nJDBC DRIVER METADATA CATALOG\n"+DrillTestDefaults.LINE_BREAK+"\n"+ new DBMetaData(dm).toString() + DrillTestDefaults.LINE_BREAK);
 /*    LOG.info(DrillTestDefaults.LINE_BREAK + "Product name = " + dm.getDatabaseProductName() + "\n"
     		 + "Product version = " + dm.getDatabaseProductVersion() + "\n"
     		 + "Product major version = " + dm.getDatabaseMajorVersion() + "\n"
@@ -143,7 +147,9 @@ public class TestDriver {
     		 + "Driver minor version = " + dm.getDriverMinorVersion() + "\n" + DrillTestDefaults.LINE_BREAK); */
 
     //Check number of drillbits equals number of cluster nodes    
+    LOG.info("> Get Num Drillbits");
     int numberOfDrillbits = Utils.getNumberOfDrillbits(connection);
+    LOG.info("> Release Connection");
     connectionPool.releaseConnection(connection);
     int numberOfClusterNodes = DrillTestDefaults.NUMBER_OF_CLUSTER_NODES;
     if (numberOfClusterNodes != 0 && numberOfClusterNodes != numberOfDrillbits) {
@@ -718,6 +724,8 @@ public class TestDriver {
   }
 
   private void prepareData(List<DrillTestCase> tests) throws Exception {
+    LOG.info("> Prepare Data");
+    LOG.info("> List Data Sources");
     Set<DataSource> dataSources = new HashSet<>();
     for (TestCaseModeler test : tests) {
       List<DataSource> dataSourceList = test.datasources;
@@ -732,6 +740,7 @@ public class TestDriver {
     CancelingExecutor genExecutor = new CancelingExecutor(cmdParam.threads, Integer.MAX_VALUE);
     List<Cancelable> copyTasks = Lists.newArrayList();
     List<Cancelable> genTasks = Lists.newArrayList();
+    LOG.info("> Create Copy Tasks");
     for (final TestCaseModeler.DataSource datasource : dataSources) {
       String mode = datasource.mode;
       if (mode.equals("cp")) {
@@ -746,6 +755,9 @@ public class TestDriver {
             try {
               Path src = new Path(DrillTestDefaults.TEST_ROOT_DIR + "/" + DrillTestDefaults.DRILL_TESTDATA_DIR + "/" + datasource.src);
               Path dest = new Path(DrillTestDefaults.DRILL_TESTDATA, datasource.dest);
+              LOG.info("> Copying Data");
+              LOG.info(src);
+              LOG.info(dest);
               dfsCopy(src, dest, DrillTestDefaults.FS_MODE);
             } catch (IOException e) {
               throw new RuntimeException(e);

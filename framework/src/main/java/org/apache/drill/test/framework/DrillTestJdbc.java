@@ -96,7 +96,9 @@ public class DrillTestJdbc implements DrillTest {
         executeSetupQuery(String.format("use `%s`", matrix.schema));
       }
 
+      LOG.info("Getting SQL statements");
       queries = Utils.getSqlStatements(modeler.queryFilename);
+      LOG.info(queries);
       for (int i = 0; i < queries.length && mainQueryIndex == -1; i++) {
     	if (queries[i].startsWith("--@test")) {
     	  mainQueryIndex = i;
@@ -132,10 +134,11 @@ public class DrillTestJdbc implements DrillTest {
     } catch (VerificationException e) {
       fail(TestStatus.DATA_VERIFICATION_FAILURE, e);
     } catch (PlanVerificationException e) {
-      fail(TestStatus.PLAN_VERIFICATION_FAILURE, e);
+      fail(TestStatus.PLAN_VERIFICATION_FAILURE, e)
     } catch (Exception e) {
+      LOG.info("failure during test (Jason temp)", e);
       fail(TestStatus.EXECUTION_FAILURE, e);
-	  } finally {
+    } finally {
       try {
         for (int i = mainQueryIndex + 1; i < queries.length; i++) {
           Thread.sleep(1000);

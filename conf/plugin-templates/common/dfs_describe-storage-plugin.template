@@ -3,7 +3,7 @@
   "config" : {
     "type" : "file",
     "enabled" : true,
-    "connection" : "maprfs:///",
+    "connection" : "file:///",
     "workspaces" : {
       "root" : {
         "location" : "/",

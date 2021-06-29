@@ -13,8 +13,8 @@ copy_to_dfs() {
     hadoop fs -rm $destination
 #   We need to copy the metadata files separately because otherwise Drill considers the tables as modified and auto refreshes metadata.
 #   Using "hadoop fs -put" doesn't help for some reason.
-    hadoop fs -touchz $destination
-    hadoop fs -appendToFile $metadata_file $destination
+# Jason - getting this workling on local filesystem that doesn't support append, replacing with put temporarily
+    hadoop fs -put $metadata_file $destination
 }
 
 #   Finding all metadata files and extracting 3 last directories of the path, then copying to dfs.

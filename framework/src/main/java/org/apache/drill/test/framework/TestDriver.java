@@ -843,6 +843,7 @@ public class TestDriver {
 	CmdConsOut cmdConsOut;
 	try {
 	  cmdConsOut = Utils.execCmd(command);
+      LOG.info("Finished command " + command);
 	  LOG.debug(cmdConsOut);
 	} catch (Exception e) {
 	  cmdConsOut = new CmdConsOut();

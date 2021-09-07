@@ -3,10 +3,14 @@
 <configuration>
 <property>
   <name>fs.defaultFS</name>
-  <value>maprfs:///</value>
+  <value>s3a://drill.cluster.tests.data</value>
 </property>
 <property>
-  <name>fs.maprfs.impl</name>
-  <value>com.mapr.fs.MapRFileSystem</value>
+  <name>fs.s3.awsAccessKeyId</name>
+  <value>${env.AWS_ACCESS_KEY_ID}</value>
+</property>
+<property>
+  <name>fs.s3.awsSecretAccessKey</name>
+  <value>${env.AWS_SECRET_ACCESS_KEY}</value>
 </property>
 </configuration>

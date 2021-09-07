@@ -65,10 +65,30 @@ import com.beust.jcommander.Parameter;
     @Parameter(names = {"-x", "--exclude"}, description = "Dependencies to exclude", required=false)
     public String excludeDependencies = null;
     
+    @Parameter(names = {"-xT", "--excludeTests"}, description = "Tests to exclude", required=false)
+    public String excludeTests = null;
+
+    @Parameter(names = {"-iT", "--includeTests"}, description = "Tests to include", required=false)
+    public String includeTests = null;
+
     public List<String> excludeDependenciesAsList() {
       if (excludeDependencies == null) {
         return new ArrayList<String>();
       }
       return Arrays.asList(excludeDependencies.split(","));
+    }
+
+    public List<String> excludeTestsAsList() {
+      if (excludeTests == null) {
+        return new ArrayList<String>();
+      }
+      return Arrays.asList(excludeTests.split(","));
+    }
+
+    public List<String> includeTestsAsList() {
+      if (includeTests == null) {
+        return new ArrayList<String>();
+      }
+      return Arrays.asList(includeTests.split(","));
     }
   }

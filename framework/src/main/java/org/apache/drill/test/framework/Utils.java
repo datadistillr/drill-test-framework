@@ -742,6 +742,7 @@ public class Utils {
       String content = getFileContent(filename);
       content = content.replace("localhost", Inet4Address.getLocalHost()
         .getHostAddress());
+      System.out.println(content);
       if (!fsMode.equals("distributedFS")) {
         content = content.replace("maprfs:", "file:");
         content = content.replaceAll("location\"\\s*:\\s*\"", "location\":\"" + System.getProperty("user.home"));
@@ -790,7 +791,13 @@ public class Utils {
     post.setEntity(new ByteArrayEntity(content.getBytes("UTF-8")));
     CloseableHttpResponse response = (CloseableHttpResponse) client.execute(post);
 
-    return isResponseSuccessful(response);
+    if (response.getStatusLine().getStatusCode() != 200) {
+        System.out.println(getHttpResponseAsString(response));
+    	return response.getStatusLine().getStatusCode() == 200;
+    } else {
+        // it appears we need to consume this response body
+        return isResponseSuccessful(response);
+    }
   }
 
   private static String getFileContent(String filename) throws IOException {

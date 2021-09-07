@@ -3,7 +3,11 @@
   "config" : {
     "type" : "file",
     "enabled" : true,
-    "connection" : "file:///",
+    "connection": "s3a://drill.cluster.tests.data",
+    "config": {
+      "fs.s3a.secret.key": "${env.AWS_SECRET_ACCESS_KEY}",
+      "fs.s3a.access.key": "${env.AWS_ACCESS_KEY_ID}"
+    },
     "workspaces" : {
       "root" : {
         "location" : "/",

@@ -1,0 +1,91 @@
+declare -a big_arr=(
+"aggregates", "decimal_avro", "identifiers", "odbcTest.py", "table_stats",
+"amplab", "decimal_negative", "impersonation", "orderby", "text_storage",
+"case_expr", "decimal_parquet", "implicit_cast", "p1tests", "timestamp_functions",
+"complex", "drill_fragments", "int96", "parquet_storage", "tpcds",
+"convert", "droptable", "interpreted_partition_pruning", "partition_pruning", "tpch",
+"cross-sources", "explicit_cast", "joins", "query_parser", "udfs",
+"crossjoin", "filter", "json", "s3minio", "union",
+"ctas", "flatten_operators", "limit0", "schema-changes", "union_all",
+"cttas", "functions", "metadata_caching", "schema_change_empty_batch", "values",
+"data-shapes", "group_by_alias", "min_max_dir", "semijoin", "views",
+"date_trunc", "hbase", "misc", "subqueries", "window_functions",
+"datetime", "hive", "morefiles", "table_function",
+"decimal", "hive_functions_nonhivedata", "no_result_set", "table_schema")
+
+declare -a new_big_arr=(
+##"aggregates",
+##"amplab",
+##"case_expr",
+##"complex",
+##"convert",
+#"cross-sources",
+##"crossjoin",
+#"ctas",
+#"cttas",
+##"data-shapes",
+##"date_trunc",
+##"datetime",
+##"decimal",
+##"decimal_avro",
+##"decimal_negative",
+##"decimal_parquet",
+##"drill_fragments",
+##"droptable",
+##"explicit_cast",
+##"filter",
+##"flatten_operators",
+##"functions",
+##"group_by_alias",
+#"hbase",
+#"hive",
+##"hive_functions_nonhivedata",
+##"identifiers",
+##"impersonation",
+##"implicit_cast",
+##"int96",
+#"interpreted_partition_pruning",
+##"joins",
+###"json",
+###"limit0",
+###"metadata_caching",
+###"min_max_dir",
+###"misc",
+###"morefiles",
+###"no_result_set",
+###"odbcTest.py",
+###"orderby",
+###"p1tests",
+###"parquet_storage",
+#"partition_pruning",
+###"query_parser",
+###"s3minio",
+###"schema-changes",
+###"schema_change_empty_batch",
+###"semijoin",
+#"subqueries",
+"table_function",
+"table_schema",
+"table_stats",
+"text_storage",
+"timestamp_functions",
+"tpcds",
+"tpch",
+"udfs",
+"union",
+"union_all",
+"values",
+"views",
+"window_functions")
+
+
+    ## declare an array variable
+    declare -a arr=("subqueries", "window_functions")
+
+    ## now loop through the above array
+    for i in "${big_arr[@]}"
+    do
+       #echo "$i"
+       bin/run_tests -s Functional/"$i"  -g functional -x hbase,hive,maprdb,s3minio -t 180 -n 20 -d &> test_output_Aug_12_2021_"$i".txt
+       # or do whatever with individual element of the array
+    done

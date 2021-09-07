@@ -37,7 +37,7 @@ public class DrillTestDefaults {
   public static String DRILL_HOME = "/opt/drill";
 
   // Defines drill running on HDFS or local filesystem.
-  public static String FS_MODE = "localFs";
+  public static String FS_MODE = "distributedFS";
 
   // Default directory storing test data on dfs.
   public static String DRILL_TESTDATA = "/drill/testdata";

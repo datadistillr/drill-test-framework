@@ -11,7 +11,7 @@
     <jackson.version>2.10.0</jackson.version>
     <drill.version>1.20.0-SNAPSHOT</drill.version>
     <hadoop.version>3.2.2</hadoop.version>
-    <runtimeDepenencies>/Users/jason/src/drill/distribution/target/apache-drill-1.20.0-SNAPSHOT/apache-drill-1.20.0-SNAPSHOT/conf</runtimeDepenencies>
+    <runtimeDepenencies>/drill.test/distribution/target/apache-drill-1.20.0-SNAPSHOT/apache-drill-1.20.0-SNAPSHOT/conf</runtimeDepenencies>
     <maven.surefire.plugin.version>2.19.1</maven.surefire.plugin.version>
   </properties>
   <dependencies>
@@ -62,6 +62,11 @@
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-aws</artifactId>
+      <version>${hadoop.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-client</artifactId>
       <version>${hadoop.version}</version>
       <exclusions>
@@ -92,14 +97,14 @@
       <groupId>org.apache.drill.exec</groupId>
       <artifactId>drill-jdbc-all</artifactId>
       <version>${drill.version}</version>
-      <systemPath>/Users/jason/src/drill/distribution/target/apache-drill-1.20.0-SNAPSHOT/apache-drill-1.20.0-SNAPSHOT/jars/jdbc-driver/drill-jdbc-all-${drill.version}.jar</systemPath>
+      <systemPath>/drill.test/distribution/target/apache-drill-1.20.0-SNAPSHOT/apache-drill-1.20.0-SNAPSHOT/jars/jdbc-driver/drill-jdbc-all-${drill.version}.jar</systemPath>
       <scope>system</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.drill.exec</groupId>
       <artifactId>drill-java-exec</artifactId>
       <version>${drill.version}</version>
-      <systemPath>/Users/jason/src/drill/distribution/target/apache-drill-1.20.0-SNAPSHOT/apache-drill-1.20.0-SNAPSHOT/jars/drill-java-exec-${drill.version}.jar</systemPath>
+      <systemPath>/drill.test/distribution/target/apache-drill-1.20.0-SNAPSHOT/apache-drill-1.20.0-SNAPSHOT/jars/drill-java-exec-${drill.version}.jar</systemPath>
       <scope>system</scope>
     </dependency>
     <dependency>

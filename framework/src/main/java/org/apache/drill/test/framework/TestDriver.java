@@ -162,7 +162,21 @@ public class TestDriver {
     setup();
     LOG.info("> INIT duration: " + stopwatch+"\n"+DrillTestDefaults.LINE_BREAK);
 
-    List<DrillTestCase> drillTestCases = Utils.getDrillTestCases();
+    List<DrillTestCase> unfilteredDrillTestCases = Utils.getDrillTestCases();
+    List<DrillTestCase> drillTestCases = new ArrayList<>();
+    List<String> includeTests = cmdParam.includeTestsAsList();
+    List<String> excludeTests = cmdParam.excludeTestsAsList();
+    if (includeTests != null || excludeTests != null) {
+        for (DrillTestCase test : unfilteredDrillTestCases ) {
+            if ((includeTests.isEmpty() || includeTests.contains(test.queryFilename))
+                &&
+		(excludeTests.isEmpty() || !excludeTests.contains(test.queryFilename))) {
+                drillTestCases.add(test);
+            }
+	}
+    } else {
+        drillTestCases = unfilteredDrillTestCases;
+    }
     List<DrillTest> tests = Lists.newArrayList();
     for (DrillTestCase testCase : drillTestCases) {
       for (int clone = 0; clone < cmdParam.clones; clone++) {
@@ -791,7 +805,7 @@ public class TestDriver {
     LOG.info(">> Copy duration: " + stopwatch + "\n");
     stopwatch.reset().start();
     LOG.info("> Generating Data");
-    genExecutor.executeAll(genTasks);
+    //genExecutor.executeAll(genTasks);
     genExecutor.close();
     LOG.info("\n>> Generation duration: " + stopwatch + "\n");
 
